@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="drop database" author="Trokhin">
+        <sql>
+            drop table if exists person cascade;
+            drop table if exists firm cascade;
+            drop table if exists event cascade;
+            drop table if exists note cascade;
+        </sql>
+    </changeSet>
+
+    <changeSet id="create person table" author="Trokhin">
+        <sql>
+            CREATE TABLE public.Person
+            (
+            Person_id serial PRIMARY KEY NOT NULL,
+            Name varchar(50) NOT NULL,
+            Email varchar(50) NOT NULL,
+            Phone varchar(15) NOT NULL,
+            Adress varchar(100) NOT NULL
+            );
+            CREATE UNIQUE INDEX Person_Person_id_uindex ON public.Person (Person_id);
+            COMMENT ON TABLE public.Person IS 'person table';
+        </sql>
+    </changeSet>
+
+    <changeSet id="create firm table" author="Trokhin">
+        <sql>
+            CREATE TABLE public.Firm
+            (
+            Firm_id serial PRIMARY KEY NOT NULL,
+            Name varchar(50) NOT NULL,
+            Email varchar(50) NOT NULL,
+            Phone varchar(15) NOT NULL,
+            Adress varchar(100) NOT NULL
+            );
+            CREATE UNIQUE INDEX Firm_Firm_id_uindex ON public.Firm (Firm_id);
+            CREATE UNIQUE INDEX Firm_Name_uindex ON public.Firm (Name);
+            CREATE UNIQUE INDEX Firm_Email_uindex ON public.Firm (Email);
+            CREATE UNIQUE INDEX Firm_Phone_uindex ON public.Firm (Phone);
+            CREATE UNIQUE INDEX Firm_Adress_uindex ON public.Firm (Adress);
+            COMMENT ON TABLE public.Firm IS 'firm table';
+        </sql>
+    </changeSet>
+
+    <changeSet id="create event table" author="Trokhin">
+        <sql>
+            CREATE TABLE public.Event
+            (
+            Event_Id serial PRIMARY KEY NOT NULL,
+            Event_name varchar(50) NOT NULL,
+            Notify boolean NOT NULL,
+            Signal boolean NOT NULL,
+            Event_time TIMESTAMP NOT NULL
+            );
+            CREATE UNIQUE INDEX Event_Event_Id_uindex ON public.Event (Event_Id);
+            COMMENT ON TABLE public.Event IS 'event table';
+        </sql>
+    </changeSet>
+
+    <changeSet id="create note table" author="Trokhin">
+        <sql>
+            CREATE TABLE public.Note
+            (
+            Note_Id serial PRIMARY KEY NOT NULL,
+            Note_body varchar(500),
+            Last_Modify TIMESTAMP NOT NULL
+            );
+            CREATE UNIQUE INDEX Note_Note_Id_uindex ON public.Note (Note_Id);
+            COMMENT ON TABLE public.Note IS 'note table';
+        </sql>
+    </changeSet>
+
+
+</databaseChangeLog>
